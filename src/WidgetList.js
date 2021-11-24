@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import Faker from 'faker';
 import './WidgetList.css';
 
-
-
 function WidgetList(props) {
 
   const [loading, setLoading] = useState(true);
@@ -39,7 +37,6 @@ function WidgetList(props) {
       </section>
     </div>
   )
-
 }
 
 const mapStateToProps = state => {
@@ -51,4 +48,5 @@ const mapDispatchToProps = dispatch => {
     saveWidgets: (widgets) => dispatch({type: "SAVE_WIDGETS", value: widgets})
   }
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(WidgetList);
