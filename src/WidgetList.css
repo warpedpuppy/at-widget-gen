@@ -1,0 +1,18 @@
+.add-widget {
+    padding: 10px 15px;
+    font-size: 20px;
+    border-radius: 5px;
+    display: block;
+    margin: 10px auto;
+    cursor: pointer;
+}
+
+section#widget-display {
+    position: relative;
+}
+
+section#widget-display .loading {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
