@@ -1,22 +1,31 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import React, { useState, useEffect, useReducer } from 'react';
 import Faker from 'faker';
 import './WidgetList.css';
 
+function widgetReducer(state, action) {
+  switch (action.type) {
+    case "SAVE_WIDGETS":
+      return [...state, action.value];
+    default:
+      return state;
+  }
+}
+
 function WidgetList(props) {
 
+  const [widgets, dispatch] = useReducer(widgetReducer, []);
   const [loading, setLoading] = useState(true);
 
   useEffect( () => {
-    if (props.widgets.length) {
+    if (widgets.length) {
       setLoading(false)
     }
-  }, [props.widgets])
+  }, [widgets])
  
   function handleSaveWidgets () {
     let title = `Title #${Math.ceil(Math.random()*1000)}`;
     let text = Faker.lorem.sentence();
-    props.saveWidgets({title, text})
+    dispatch({type: "SAVE_WIDGETS", value: {title, text}})
   }
 
   return  (
@@ -25,7 +34,7 @@ function WidgetList(props) {
       <section id="widget-display">
         { loading && (<div className="loading">the widget list is empty right now. . . </div>) }
         {
-          props.widgets.map((widget, i) =>  {
+          widgets.map((widget, i) =>  {
             return (
               <div key={i}>
                 <h1>{ widget.title }</h1>
@@ -39,14 +48,4 @@ function WidgetList(props) {
   )
 }
 
-const mapStateToProps = state => {
-  const { widgets } = state;
-  return { widgets }
-}
-const mapDispatchToProps = dispatch => {
-  return {
-    saveWidgets: (widgets) => dispatch({type: "SAVE_WIDGETS", value: widgets})
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(WidgetList);
+export default WidgetList;
